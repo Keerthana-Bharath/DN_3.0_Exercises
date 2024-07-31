@@ -51,14 +51,4 @@ class PaymentContext {
 public class StrategyPatternExample {
     public static void main(String[] args) {
         PaymentStrategy creditCardPayment = new CreditCardPayment("1234-5678-9876-5432", "John Doe", "12/25");
-        PaymentStrategy payPalPayment = new PayPalPayment("john.doe@example.com");
-
-        PaymentContext paymentContext = new PaymentContext(creditCardPayment);
-        System.out.println("Making payment with Credit Card:");
-        paymentContext.executePayment(100.0);
-
-        paymentContext = new PaymentContext(payPalPayment);
-        System.out.println("Making payment with PayPal:");
-        paymentContext.executePayment(200.0);
-    }
-}
+        PaymentStrategy payPalPayment
