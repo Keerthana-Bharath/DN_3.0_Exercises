@@ -5,7 +5,6 @@ import com.library.repository.BookRepository;
 public class BookService {
     private BookRepository bookRepository;
 
-    // Setter for bookRepository
     public void setBookRepository(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
