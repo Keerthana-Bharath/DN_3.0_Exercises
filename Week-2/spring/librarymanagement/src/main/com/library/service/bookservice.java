@@ -10,8 +10,15 @@ public class BookService {
     private BookRepository bookRepository;
 
     @Autowired
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+        System.out.println("BookService initialized using constructor injection");
+    }
+
+    @Autowired
     public void setBookRepository(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
+        System.out.println("BookService initialized using setter injection");
     }
 
     public void manageBooks() {
