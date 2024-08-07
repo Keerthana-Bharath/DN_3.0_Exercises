@@ -6,11 +6,6 @@ CREATE TABLE Customers (
     IsVIP BOOLEAN DEFAULT FALSE
 );
 
-INSERT INTO Customers (Name, Age, Balance) VALUES ('John Doe', 65, 12000);
-INSERT INTO Customers (Name, Age, Balance) VALUES ('Jane Smith', 58, 8000);
-INSERT INTO Customers (Name, Age, Balance) VALUES ('Alice Johnson', 72, 15000);
-INSERT INTO Customers (Name, Age, Balance) VALUES ('Bob Brown', 45, 9500);
-
 CREATE TABLE Loans (
     LoanID INT PRIMARY KEY AUTO_INCREMENT,
     CustomerID INT,
@@ -19,12 +14,18 @@ CREATE TABLE Loans (
     FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
 
-INSERT INTO Loans (CustomerID, InterestRate, DueDate) VALUES (1, 5.0, CURDATE() + INTERVAL 20 DAY);
-INSERT INTO Loans (CustomerID, InterestRate, DueDate) VALUES (2, 4.5, CURDATE() + INTERVAL 40 DAY);
-INSERT INTO Loans (CustomerID, InterestRate, DueDate) VALUES (3, 6.0, CURDATE() + INTERVAL 10 DAY);
-INSERT INTO Loans (CustomerID, InterestRate, DueDate) VALUES (4, 5.5, CURDATE() + INTERVAL 15 DAY);
+INSERT INTO Customers (Name, Age, Balance) VALUES 
+('John Doe', 65, 12000),
+('Jane Smith', 58, 8000),
+('Alice Johnson', 72, 15000),
+('Bob Brown', 45, 9500);
 
---Apply Discount 
+INSERT INTO Loans (CustomerID, InterestRate, DueDate) VALUES 
+(1, 5.0, CURDATE() + INTERVAL 20 DAY),
+(2, 4.5, CURDATE() + INTERVAL 40 DAY),
+(3, 6.0, CURDATE() + INTERVAL 10 DAY),
+(4, 5.5, CURDATE() + INTERVAL 15 DAY);
+
 DELIMITER $$
 
 CREATE PROCEDURE ApplyDiscount()
@@ -53,7 +54,6 @@ BEGIN
         SET InterestRate = InterestRate - 1
         WHERE LoanID = loan_id;
 
-        SELECT CONCAT('Applied discount to Customer ID: ', cust_id) AS Result;
     END LOOP;
 
     CLOSE customer_cursor;
@@ -61,7 +61,6 @@ END $$
 
 DELIMITER ;
 
---Promote Customers
 DELIMITER $$
 
 CREATE PROCEDURE PromoteToVIP()
@@ -87,7 +86,6 @@ BEGIN
         SET IsVIP = TRUE
         WHERE CustomerID = cust_id;
 
-        SELECT CONCAT('Promoted to VIP: Customer ID ', cust_id) AS Result;
     END LOOP;
 
     CLOSE balance_cursor;
@@ -95,7 +93,6 @@ END $$
 
 DELIMITER ;
 
---Send Loan Reminders
 DELIMITER $$
 
 CREATE PROCEDURE SendLoanReminders()
@@ -120,21 +117,18 @@ BEGIN
             LEAVE read_loop;
         END IF;
 
-        SELECT CONCAT('Reminder: Loan due for Customer ', cust_name, 
-                      ' (Customer ID: ', cust_id, ') on ', due_date) AS Reminder;
     END LOOP;
 
     CLOSE loan_cursor;
 END $$
 
 DELIMITER ;
-
 SELECT * FROM Loans;
 SELECT * FROM Customers;
 
 CALL ApplyDiscount();
 CALL PromoteToVIP();
 CALL SendLoanReminders();
+
 SELECT * FROM Loans;
 SELECT * FROM Customers;
-
