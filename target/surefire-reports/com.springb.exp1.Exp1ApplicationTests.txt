@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.springb.exp1.Exp1ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.32 s <<< FAILURE! - in com.springb.exp1.Exp1ApplicationTests
+com.springb.exp1.Exp1ApplicationTests  Time elapsed: 0.32 s  <<< ERROR!
+java.lang.NoSuchMethodError: 'org.junit.jupiter.api.extension.ExecutableInvoker org.junit.jupiter.api.extension.ExtensionContext.getExecutableInvoker()'
+
